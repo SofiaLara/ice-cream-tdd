@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import SummaryForm from "../SummaryForm";
 
 describe("testing summary form page", () => { 
@@ -13,12 +14,13 @@ describe("testing summary form page", () => {
     test("click on checkbox enables button", () => {
         render(<SummaryForm />);
         const checkboxElement = screen.getByRole('checkbox');
-        const buttonElement = screen.getByRole('button', {name: /confirm order/i});
-        fireEvent.click(checkboxElement);
+        const buttonElement = screen.getByRole('button', { name: /confirm order/i });
+
+        userEvent.click(checkboxElement);
         expect(checkboxElement).toBeChecked();
         expect(buttonElement).toBeEnabled();
 
-        fireEvent.click(checkboxElement);
+        userEvent.click(checkboxElement);
         expect(checkboxElement).not.toBeChecked();
         expect(buttonElement).toBeDisabled();
     });
